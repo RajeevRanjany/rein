@@ -33,43 +33,43 @@ Key findings for January 2026 are in [docs/METHODOLOGY.md](docs/METHODOLOGY.md#6
 ```
 .
 ├── README.md
-├── docker-compose.yml           # api + web, one command
-├── Makefile                     # setup / ingest / api / web / lint / openapi
-├── .github/workflows/ci.yml     # lint, type-check, build, docker build
+├── docker-compose.yml
+├── Makefile
+├── .github/workflows/ci.yml
 ├── docs/
-│   ├── SYSTEM_DESIGN.md         # end-to-end design
-│   ├── METHODOLOGY.md           # definitions, band method, assumptions, findings
-│   └── adr/                     # architecture decision records
-├── api/                         # Python 3.12, FastAPI, DuckDB, pandas
+│   ├── SYSTEM_DESIGN.md
+│   ├── METHODOLOGY.md
+│   └── adr/
+├── api/
 │   ├── Dockerfile, heroku.yml
-│   ├── requirements*.txt, pyproject.toml   (ruff, mypy, pytest config)
+│   ├── requirements*.txt, pyproject.toml
 │   ├── app/
-│   │   ├── main.py              # app factory, CORS, gzip, JSON access logs
-│   │   ├── config.py            # env-driven settings (window, cutoff, paths)
-│   │   ├── deps.py              # shared query validation
-│   │   ├── routers/api.py       # /api/v1/* endpoints
-│   │   ├── schemas/models.py    # pydantic response models (-> OpenAPI -> TS types)
-│   │   ├── services/analytics.py# orchestration + per-snapshot caching
-│   │   ├── core/                # PURE functions: selection, metrics, bands, baseline, ramps, quality
-│   │   └── repository/          # Repository port + DuckDB adapter
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── deps.py
+│   │   ├── routers/api.py
+│   │   ├── schemas/models.py
+│   │   ├── services/analytics.py
+│   │   ├── core/
+│   │   └── repository/
 │   ├── ingestion/
-│   │   ├── elexon_client.py     # HTTP, day chunks, retry with backoff + jitter
-│   │   ├── normalise.py         # parse, UTC, validate, dedupe
-│   │   ├── run_ingest.py        # CLI: Elexon -> raw JSON -> DuckDB (idempotent upserts)
-│   │   └── build_derived.py     # CLI: horizon matrix, error quantiles, snapshot metadata
+│   │   ├── elexon_client.py
+│   │   ├── normalise.py
+│   │   ├── run_ingest.py
+│   │   └── build_derived.py
 │   ├── scripts/export_openapi.py
 │   └── data/
-│       ├── headroom.duckdb      # January 2026 snapshot, baked into the image
-│       └── raw/                 # raw API responses as received (rebuild with --from-raw)
-└── web/                         # React 19, TypeScript (strict), Vite, ECharts, TanStack Query
+│       ├── headroom.duckdb
+│       └── raw/
+└── web/
     ├── Dockerfile, nginx.conf, vercel.json
-    ├── openapi.json             # exported API schema
+    ├── openapi.json
     └── src/
-        ├── api/                 # typed client; schema.d.ts generated from openapi.json
-        ├── hooks/               # data hooks, URL state
-        ├── components/          # charts, KPI cards, controls, table, states
-        ├── pages/               # Decision, Series, Accuracy, Reliability
-        └── lib/                 # formatting (Europe/London), chart mappings, theme tokens
+        ├── api/
+        ├── hooks/
+        ├── components/
+        ├── pages/
+        └── lib/
 ```
 
 ## Run it
@@ -88,8 +88,8 @@ Windows PowerShell:
 ```powershell
 cd api
 python -m venv .venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # allow Activate.ps1 in this window only
-.\.venv\Scripts\Activate.ps1                                 # prompt now starts with (.venv)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   
+.\.venv\Scripts\Activate.ps1                                 
 pip install -r requirements-dev.txt
 python -m uvicorn app.main:app --reload --port 8000
 ```
@@ -121,8 +121,8 @@ npm run dev                        # http://localhost:5173
 
 ```bash
 cd api
-python -m ingestion.run_ingest          # fetch + land raw JSON + upsert (idempotent)
-python -m ingestion.build_derived       # rebuild derived tables
+python -m ingestion.run_ingest         
+python -m ingestion.build_derived       
 # or rebuild offline from landed raw files:
 python -m ingestion.run_ingest --from-raw
 python -m ingestion.build_derived
