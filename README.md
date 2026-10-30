@@ -9,9 +9,10 @@ in January 2026 (delivery days 2 Jan → 1 Feb 2026).
 
 | | |
 |---|---|
-| **Live app** | |
-| **API docs** | |
-| **Video** | |
+| **Live app** | | https://reinn-ua4a.vercel.app
+| **API docs** | | https://reinn-kqys.vercel.app/docs
+| **Video** | | https://youtu.be/IKQ2mdPlPnY
+
 
 ## What it does
 
